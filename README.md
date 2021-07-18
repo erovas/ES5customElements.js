@@ -44,7 +44,7 @@ For use with Internet Explorer and EDGE Legacy (Only HTMLElement can be used)
 ```
 ## Demo
 
-See folder of examples (TODO)
+See folder of examples
 
 ## Authors
 
@@ -106,7 +106,7 @@ Para utilizarlo con Internet Explorer y EDGE Legacy (Solo es posible utilizar HT
 
 ## Demo
 
-Ver la carpeta de ejemplos (TODO)
+Ver la carpeta de ejemplos
 
 ## Autores
 
