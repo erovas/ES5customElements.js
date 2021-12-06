@@ -1,5 +1,5 @@
 # ES5customElements.js
-Librery that allows creating custom elements (web components) using ES5 syntax
+Library that allows creating custom elements (web components) using ES5 syntax
 
 ## Compatibility
 
