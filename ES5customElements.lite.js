@@ -239,38 +239,17 @@
 
         tagName = (tagName + '').toLowerCase();
 
-        //Es un Element nativo extendido
-        if(tagName && !_aux_check_syntax_tagName(tagName) && options){
-            let cElement = NATIVE_CREATE_ELEMENT.apply(document, arguments);
-            cElement.setAttribute('is', options.is);
-            return cElement;
-        }
-        
-        //Es un custom Element extendido (quizas esto nunca se haga)
-        if(tagName && _aux_check_syntax_tagName(tagName) && options && _aux_is_plain_object(options)){
-            
-            //Recuperar string con el name del custom element
-            let isName = options.is;
-
-            //Recuperar la function constructora del custom element
-            let cElement = window[CUSTOM_ELEMENTS].get(isName);
-
-            cElement.setAttribute('is', isName);
-
-            return new cElement();
-        }
-
-        //Es un custom Element normalito
-        if(tagName && _aux_check_syntax_tagName(tagName) && !options){
+        //Es un custom Element
+        if(_aux_check_syntax_tagName(tagName)){
             
             let cElement = window[CUSTOM_ELEMENTS].get(tagName);
 
-            return new cElement();
+            if(!cElement)
+                return new cElement();
         }
 
-        //Caso normal
-        if(tagName)
-            return NATIVE_CREATE_ELEMENT.apply(document, arguments)
+        //Es un Element nativo (extendido o no)
+        return NATIVE_CREATE_ELEMENT.apply(document, arguments);
     }
 
     //#endregion
@@ -291,7 +270,7 @@
             RESERVED_NAMES.forEach(function(e){out.push(e)});
             return out;
         },
-        '-listNames': RESERVED_NAMES
+        '-ln': RESERVED_NAMES
     }
 
 })(window, document);

@@ -48,7 +48,6 @@
     let NO_FUNCTION = 'is not a function';
     let NO_PLAIN_OBJECT = 'is not a plain object';
     let NO_ARRAY_STRING = 'is not an array of strings';
-    let NO_DEFINED = 'is not defined';
     let NO_VALID_CE_NAME = 'is not a valid custom element name';
     let NO_VALID_INTERFACE = 'is not a valid interface';
 
@@ -357,49 +356,17 @@
 
         tagName = (tagName + '').toLowerCase();
 
-        //Es un Element nativo extendido
-        if(tagName && !_aux_check_syntax_tagName(tagName) && options){
-            let cElement = NATIVE_CREATE_ELEMENT.apply(document, arguments);
-            cElement.setAttribute('is', options.is);
-            return cElement;
-        }
-        
-        //Es un custom Element extendido (quizas esto nunca se haga)
-        if(tagName && _aux_check_syntax_tagName(tagName) && options && _aux_is_plain_object(options)){
-            
-            //Recuperar string con el name del custom element
-            let isName = options.is;
-            
-            if(!isName || !_aux_check_syntax_tagName(isName))
-                _aux_throwError('options', 'is invalid');
-
-            //Recuperar la function constructora del custom element
-            let cElement = window[CUSTOM_ELEMENTS].get(isName);
-            
-            if(!cElement)
-                _aux_throwError(isName, NO_DEFINED);
-
-            cElement.setAttribute('is', isName);
-
-            return new cElement();
-        }
-
-        //Es un custom Element normalito
-        if(tagName && _aux_check_syntax_tagName(tagName) && !options){
+        //Es un custom Element
+        if(_aux_check_syntax_tagName(tagName)){
             
             let cElement = window[CUSTOM_ELEMENTS].get(tagName);
 
             if(!cElement)
-                _aux_throwError(tagName, NO_DEFINED);
-
-            return new cElement();
+                return new cElement();
         }
 
-        //Caso normal
-        if(tagName)
-            return NATIVE_CREATE_ELEMENT.apply(document, arguments)
-
-        _aux_throwError("There are not parameters");
+        //Es un Element nativo (extendido o no)
+        return NATIVE_CREATE_ELEMENT.apply(document, arguments);
     }
 
     //#endregion
@@ -420,7 +387,7 @@
             RESERVED_NAMES.forEach(function(e){out.push(e)});
             return out;
         },
-        '-listNames': RESERVED_NAMES
+        '-ln': RESERVED_NAMES
     }
 
 })(window, document);
