@@ -361,7 +361,7 @@
             
             let cElement = window[CUSTOM_ELEMENTS].get(tagName);
 
-            if(!cElement)
+            if(cElement)
                 return new cElement();
         }
 

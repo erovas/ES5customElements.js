@@ -53,26 +53,6 @@
     }
 
     /**
-     * Comprueba si obj es un objeto palno
-     * @param {object} obj 
-     * @returns 
-     */
-    function _aux_is_plain_object(obj){
-        if(
-            //Separate from primitives
-            typeof obj === 'object' &&
-            //Separate build-in like Math
-            Object.prototype.toString.call(obj) === '[object Object]'
-            ){
-            let props = Object.getPrototypeOf(obj);
-            //obj == Object.create(null) || Separate instances (Array, DOM, ...)
-            return props === null || props[CONSTRUCTOR] === Object;
-        }
-    
-        return false;
-    }
-
-    /**
      * Simliar a Object.assing() pero mas poderoso
      * @param {object} target 
      * @param {object} source 
@@ -244,7 +224,7 @@
             
             let cElement = window[CUSTOM_ELEMENTS].get(tagName);
 
-            if(!cElement)
+            if(cElement)
                 return new cElement();
         }
 
